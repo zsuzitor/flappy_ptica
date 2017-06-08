@@ -15,12 +15,6 @@ namespace flappy_birds
         public List<coll> coll_list = new List<coll>();
 
 
-       /* int column1_top = 0;
-        int column1_left = 763;
-        int column2_top = 386;
-        int column2_left = 763;
-        */
-
         public Form1()
         {
             InitializeComponent();
@@ -97,21 +91,32 @@ namespace flappy_birds
 
         private void dvig_column_otrisovka()
         {
-
-            for(int i=0;i<coll_list.Count;++i)
+            Random rand = new Random();
+            int rand_int=rand.Next(-3, 5);
+            for (int i=0;i<coll_list.Count;++i)
             {
                 if (coll_list[i].left > 0)
                 {
                     coll_list[i].left -= 3;
-                    coll_list[i].right -= 3;
+                    
                 }
                 else
                 {
                     //перерисовать
                     coll_list[i].left = 763;
-                    coll_list[i].right = 763 + 50;
-                    Random rand = new Random();
-                    rand.Next(0, 10);
+                    
+                    if(i<3)
+                    {
+                        coll_list[i].top = 50 * rand_int;
+                        coll_list[i].Top = 0;
+                    }
+                    
+                    //if (coll_list[i].number>=4)
+                    else
+                    {
+                        coll_list[i].top = coll_list[i - 3].bott + 156;
+                        coll_list[i].Bott = 600;
+                    }
 
 
                 }
@@ -133,7 +138,18 @@ namespace flappy_birds
                         {
                             if(b.number== nomer_coll)
                             {
-                                tmp.Top = b.top;
+                                tmp.Height = b.bott - b.top;
+                                //if (b.bott- b.top>200)
+                                //{
+                                    tmp.Top = b.top;
+                                    //tmp.Height = b.bott - b.top;
+                               // }
+                                //else
+                                //{
+                                    tmp.Top = b.top;
+                                    //tmp.Height = 200;
+                               // }
+                                
                                 tmp.Left = b.left;
                             }
                             
@@ -165,7 +181,7 @@ namespace flappy_birds
             for(int i=0;i<3;++i)
             {
                 int itt = i+1;
-                coll_list.Add(new coll(0, 200, 763+150*i, 763+50 + 150 * i, itt));
+                coll_list.Add(new coll(0, 763+250*i, itt));
                 PictureBox a = new PictureBox();
                 a.Image = Image.FromFile("column.PNG");
                 a.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -181,7 +197,7 @@ namespace flappy_birds
             for (int i = 3; i < 6; ++i)
             {
                 int itt = i+1;
-                coll_list.Add(new coll(0 + 356, 200+356, 763 + 150 * (i-3), 763 + 50 + 150 * (i-3), i+1));
+                coll_list.Add(new coll(0 + 356, 763 + 250 * (i-3), i+1));
                 PictureBox a = new PictureBox();
                 a.Image= Image.FromFile("column.PNG");
                 a.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -210,6 +226,11 @@ namespace flappy_birds
                 bird_form.Top -=60;
 
             }
+            if (e.KeyCode == Keys.Down)
+            {
+                bird_form.Top += 30;
+
+            }
             if (e.KeyCode == Keys.Left)
             {
                 if (bird_form.Left-20>0)
@@ -231,19 +252,53 @@ namespace flappy_birds
 
     public class coll
     {
-        public int top;
-        public int bott;
-        public int left;
-        public int right;
+        public int Top;
+        public int top
+        {
+            get { return Top; }
+            set
+            {
+               // if(number>3)
+               // {
+                    Top = value;
+               // }
+               // else
+
+               // Top = 0;
+                Bott = value + 200;
+            }
+        }
+        public int Bott;
+        public int bott
+        {
+            
+            
+            get { return Bott; }
+            set { Bott = value; }
+        }
+        private int Left;
+        public int left
+        {
+            get { return Left; }
+            set
+            {
+                Left = value;
+                Right = value + 50;
+            }
+        }
+        private int Right;
+        public int right {
+            get { return Right; }
+        }
+           
         public int number;
 
-        public coll(int a, int b, int c, int d, int g)
+        public coll(int a, int c, int g)
         {
-            top = a;
-            bott = b;
-            left = c;
-            right = d;
             number = g;
+            top = a;
+            left = c;
+           
         }
 
 
