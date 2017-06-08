@@ -33,7 +33,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.s4et = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bird_form)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -48,7 +47,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.s4et);
             this.panel1.Controls.Add(this.bird_form);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -71,14 +69,6 @@
             this.timer1.Enabled = true;
             this.timer1.Interval = 1;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // label1
-            // 
-            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Location = new System.Drawing.Point(29, 349);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(774, 23);
-            this.label1.TabIndex = 2;
             // 
             // Form1
             // 
@@ -103,7 +93,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label s4et;
-        private System.Windows.Forms.Label label1;
     }
 }
 
