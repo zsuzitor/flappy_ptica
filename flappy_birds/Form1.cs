@@ -15,11 +15,11 @@ namespace flappy_birds
         public List<coll> coll_list = new List<coll>();
 
 
-        int column1_top = 0;
+       /* int column1_top = 0;
         int column1_left = 763;
         int column2_top = 386;
         int column2_left = 763;
-
+        */
 
         public Form1()
         {
@@ -38,7 +38,9 @@ namespace flappy_birds
             loose_stolkn=test_stolknovenii();
 
             if (!loose_stolkn)
-                this.Close();
+                //Form1_Load(null, null);
+                // this.Close();
+                timer1.Enabled = false;
 
             // if(bird_form.Top<=column1_form.Bottom&&)
 
@@ -51,39 +53,100 @@ namespace flappy_birds
                 return false;
             if (bird_form.Bottom >= panel1.Bottom)
                 return  false;
-            if(bird_form.Top<=column1_form.Bottom&& bird_form.Right >= column1_form.Left&& bird_form.Right<= column1_form.Right)
-                return false;
-
-            if (bird_form.Bottom >= column2_form.Top && bird_form.Right >= column2_form.Left && bird_form.Right <= column2_form.Right)
-                return false;
-
-
-            if (bird_form.Right >= column2_form.Right && bird_form.Right <= column2_form.Right + 2)
+            for(int i=0;i< coll_list.Count;++i)
             {
-                int a = Convert.ToInt32(s4et.Text);
-                s4et.Text = (++a).ToString();
-            }
-                
+                if(coll_list[i].number<4)
+                {
+                    if (bird_form.Top <= coll_list[i].bott && bird_form.Right >= coll_list[i].left && bird_form.Right <= coll_list[i].right)
+                    {
+                        //MessageBox.Show("1");
+                        return false;
+                    }
+                        
+                }
 
-                return true;
+                else
+                {
+
+                    if (bird_form.Bottom >= coll_list[i].top && bird_form.Right >= coll_list[i].left && bird_form.Right <= coll_list[i].right)
+                    {
+
+                        //MessageBox.Show("2");
+                        return false;
+                    }
+                        
+                }
+
+
+
+                if (bird_form.Right >= coll_list[i].right && bird_form.Right <= coll_list[i].right + 2&& coll_list[i].number<4)
+                {
+                    int a = Convert.ToInt32(s4et.Text);
+                    s4et.Text = (++a).ToString();
+                }
+
+
+            }
+           
+
+
+
+            return true;
         }
+
+
         private void dvig_column_otrisovka()
         {
-            if(column1_form.Left>0)
+
+            for(int i=0;i<coll_list.Count;++i)
             {
-                column1_form.Left -= 3;
-                column2_form.Left -= 3;
-            }
-            else
-            {
-                //перерисовать
-                column1_form.Left = 763;
-                column2_form.Left = 763;
-                Random rand = new Random();
-                rand.Next(0,10);
+                if (coll_list[i].left > 0)
+                {
+                    coll_list[i].left -= 3;
+                    coll_list[i].right -= 3;
+                }
+                else
+                {
+                    //перерисовать
+                    coll_list[i].left = 763;
+                    coll_list[i].right = 763 + 50;
+                    Random rand = new Random();
+                    rand.Next(0, 10);
 
 
+                }
+
             }
+
+
+            foreach(var i in panel1.Controls)
+            {
+                if(i is PictureBox)
+                {
+                    PictureBox tmp = (PictureBox)i;
+                    if(tmp.Name.IndexOf("column") !=-1&& tmp.Name.IndexOf("_form") != -1)//"column"+ itt + "_form"
+                    {
+                        char tmp_str = tmp.Name[6];
+                        int nomer_coll =(int)char.GetNumericValue(tmp_str);
+                        
+                        foreach(var b in coll_list)
+                        {
+                            if(b.number== nomer_coll)
+                            {
+                                tmp.Top = b.top;
+                                tmp.Left = b.left;
+                            }
+                            
+
+                        }
+                       
+
+                    }
+
+                }
+
+            }
+            
                 
         }
 
@@ -95,26 +158,47 @@ namespace flappy_birds
             bird_form.Image = Image.FromFile("bird.jpg");
             bird_form.SizeMode = PictureBoxSizeMode.StretchImage;
             
-                column1_form.Image = Image.FromFile("column.PNG");
+              /*  column1_form.Image = Image.FromFile("column.PNG");
             column1_form.SizeMode = PictureBoxSizeMode.StretchImage;
             column2_form.Image = Image.FromFile("column.PNG");
-            column2_form.SizeMode = PictureBoxSizeMode.StretchImage;
+            column2_form.SizeMode = PictureBoxSizeMode.StretchImage;*/
             for(int i=0;i<3;++i)
             {
-                coll_list.Add(new coll(column1_form.Top, column1_form.Bottom, column1_form.Left+150*i, column1_form.Right + 150 * i, i+1));
+                int itt = i+1;
+                coll_list.Add(new coll(0, 200, 763+150*i, 763+50 + 150 * i, itt));
                 PictureBox a = new PictureBox();
+                a.Image = Image.FromFile("column.PNG");
+                a.SizeMode = PictureBoxSizeMode.StretchImage;
+                a.Height = coll_list[i].bott;
+                a.Width = coll_list[i].right- coll_list[i].left;
+                a.Top = coll_list[i].top;
+                a.Left = coll_list[i].left;
+                
+                a.Name = "column"+ itt + "_form";
+                panel1.Controls.Add(a);
 
             }
             for (int i = 3; i < 6; ++i)
             {
-                coll_list.Add(new coll(column1_form.Top + 356, column1_form.Bottom+356, column1_form.Left + 150 * i, column1_form.Right + 150 * i, i+1));
+                int itt = i+1;
+                coll_list.Add(new coll(0 + 356, 200+356, 763 + 150 * (i-3), 763 + 50 + 150 * (i-3), i+1));
+                PictureBox a = new PictureBox();
+                a.Image= Image.FromFile("column.PNG");
+                a.SizeMode = PictureBoxSizeMode.StretchImage;
+                a.Height = coll_list[i].bott;
+                a.Width = coll_list[i].right - coll_list[i].left;
+                a.Top = coll_list[i].top;
+                a.Left = coll_list[i].left;
+
+                a.Name = "column" + itt + "_form";
+                panel1.Controls.Add(a);
 
             }
-
-            column1_form.Left = column1_left;
+            var th = coll_list;
+           /* column1_form.Left = column1_left;
             column2_form.Left = column2_left;
             column1_form.Top = column1_top;
-            column2_form.Top = column2_top;
+            column2_form.Top = column2_top;*/
 
         }
 
@@ -122,14 +206,24 @@ namespace flappy_birds
         {
             if(e.KeyCode==Keys.Up)
             {
+                
                 bird_form.Top -=60;
 
             }
-            if (e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Left)
             {
-                this.Close();
+                if (bird_form.Left-20>0)
+                bird_form.Left -= 20;
 
             }
+            if (e.KeyCode == Keys.Right)
+            {
+                if (bird_form.Left + 70 < panel1.Right)
+                    bird_form.Left += 20;
+
+            }
+            if (e.KeyCode == Keys.Escape)
+                this.Close();
         }
     }
 
