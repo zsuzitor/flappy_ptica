@@ -1,0 +1,9 @@
+C:\csharp\flappy_b\flappy_birds\flappy_birds\bin\Debug\flappy_birds.exe.config
+C:\csharp\flappy_b\flappy_birds\flappy_birds\bin\Debug\flappy_birds.exe
+C:\csharp\flappy_b\flappy_birds\flappy_birds\bin\Debug\flappy_birds.pdb
+C:\csharp\flappy_b\flappy_birds\flappy_birds\obj\Debug\flappy_birds.csprojResolveAssemblyReference.cache
+C:\csharp\flappy_b\flappy_birds\flappy_birds\obj\Debug\flappy_birds.Form1.resources
+C:\csharp\flappy_b\flappy_birds\flappy_birds\obj\Debug\flappy_birds.Properties.Resources.resources
+C:\csharp\flappy_b\flappy_birds\flappy_birds\obj\Debug\flappy_birds.csproj.GenerateResource.Cache
+C:\csharp\flappy_b\flappy_birds\flappy_birds\obj\Debug\flappy_birds.exe
+C:\csharp\flappy_b\flappy_birds\flappy_birds\obj\Debug\flappy_birds.pdb
